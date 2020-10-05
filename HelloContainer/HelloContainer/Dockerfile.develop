@@ -1,0 +1,19 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_URLS=http://+:80
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+EXPOSE 80
+
+WORKDIR /src
+COPY ["HelloContainer.Data/HelloContainer.Data.csproj", "HelloContainer.Data/"]
+COPY ["HelloContainer/HelloContainer.csproj", "HelloContainer/"]
+
+RUN dotnet restore "HelloContainer/HelloContainer.csproj"
+COPY . .
+WORKDIR "/src/HelloContainer"
+RUN dotnet build --no-restore "HelloContainer.csproj" -c $BUILD_CONFIGURATION
+
+RUN echo "exec dotnet run --no-build --no-launch-profile -c $BUILD_CONFIGURATION --" > /entrypoint.sh
+
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

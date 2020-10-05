@@ -28,6 +28,13 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true
+    },
+    "Azure Dev Spaces": {
+      "commandName": "AzureDevSpaces",
+      "launchBrowser": true,
+      "resourceGroup": "ts-demo-aks",
+      "aksName": "tsdemoCluster",
+      "subscriptionId": "e9082ed2-e614-4d0b-9af7-267aa01f1661"
     }
   }
 }
